@@ -7,74 +7,13 @@ GO
 USE airbnb_analytics;
 GO
 
-DROP TABLE IF EXISTS _tb_stg_listings;
-GO
-CREATE TABLE _tb_stg_listings (
-	 listing_id							BIGINT IDENTITY(1,1) PRIMARY KEY
-	,refresh_date						DATETIME DEFAULT GETDATE()
-	,id									NVARCHAR(1000)
-	,name								NVARCHAR(1000)
-	
-	,host_id							NVARCHAR(1000)
-	,host_name							NVARCHAR(1000)
-	,host_since							NVARCHAR(1000)
-	,host_location						NVARCHAR(1000)
-	,host_response_time					NVARCHAR(1000)
-	,host_response_rate					NVARCHAR(1000)
-	,host_acceptance_rate				NVARCHAR(1000)
-	,host_is_superhost					NVARCHAR(1000)
-	,host_has_profile_pic				NVARCHAR(1000)
-	,host_identity_verified				NVARCHAR(1000)
-
-	,neighbourhood_id					NVARCHAR(1000)
-	,neighbourhood						NVARCHAR(1000)
-	,neighbourhood_cleansed_id			NVARCHAR(1000)
-	,neighbourhood_cleansed				NVARCHAR(1000)
-	,latitude							NVARCHAR(1000)
-	,longitude							NVARCHAR(1000)
-	,property_type_id					NVARCHAR(1000)
-	,property_type						NVARCHAR(1000)
-	,room_type_id						NVARCHAR(1000)
-	,room_type							NVARCHAR(1000)
-	,accommodates						NVARCHAR(1000)
-	,bathrooms							NVARCHAR(1000)
-	,bedrooms							NVARCHAR(1000)
-	,beds								NVARCHAR(1000)
-	,price								NVARCHAR(1000)
-
-	,minimum_nights						NVARCHAR(1000)
-	,maximum_nights						NVARCHAR(1000)
-	,minimum_minimum_nights				NVARCHAR(1000)
-	,maximum_minimum_nights				NVARCHAR(1000)
-	,minimum_maximum_nights				NVARCHAR(1000)
-	,maximum_maximum_nights				NVARCHAR(1000)
-	,minimum_nights_avg_ntm				NVARCHAR(1000)
-	,maximum_nights_avg_ntm				NVARCHAR(1000)
-
-	,number_of_reviews					NVARCHAR(1000)
-	,number_of_reviews_ltm				NVARCHAR(1000)
-	,number_of_reviews_l30d				NVARCHAR(1000)
-	,first_review						NVARCHAR(1000)
-	,last_review						NVARCHAR(1000)
-	,review_scores_rating				NVARCHAR(1000)
-	,review_scores_accuracy				NVARCHAR(1000)
-	,review_scores_cleanliness			NVARCHAR(1000)
-	,review_scores_checkin				NVARCHAR(1000)
-	,review_scores_communication		NVARCHAR(1000)
-	,review_scores_location				NVARCHAR(1000)
-	,review_scores_value				NVARCHAR(1000)
-	,instant_bookable					NVARCHAR(1000)
-	,reviews_per_month					NVARCHAR(1000)
-)
-GO
-
 DROP TABLE IF EXISTS _tb_ref_hosts;
 GO
 
 CREATE TABLE _tb_ref_hosts (
-	 id									INT IDENTITY(1,1) PRIMARY KEY
+	 id									INT IDENTITY(1,1) NOT NULL
 	,refresh_date						DATETIME DEFAULT GETDATE()
-	,host_id							BIGINT
+	,host_id							BIGINT NOT NULL
 	,host_name							NVARCHAR(200)
 	,host_since							DATE
 	,host_location						NVARCHAR(200)
@@ -90,7 +29,7 @@ GO
 DROP TABLE IF EXISTS _tb_dim_listings;
 GO
 CREATE TABLE _tb_dim_listings (
-	 listing_id							BIGINT IDENTITY(1,1) PRIMARY KEY
+	 listing_id							BIGINT IDENTITY(1,1)
 	,refresh_date						DATETIME DEFAULT GETDATE()
 	,id									BIGINT UNIQUE NOT NULL
 	,name								NVARCHAR(500)
@@ -135,7 +74,7 @@ DROP TABLE IF EXISTS _tb_dim_reviews;
 GO
 
 CREATE TABLE _tb_dim_reviews (
-	 reviews_id							BIGINT IDENTITY(1,1) PRIMARY KEY
+	 reviews_id							BIGINT IDENTITY(1,1)
 	,refresh_date						DATETIME DEFAULT GETDATE()
 	,id									BIGINT UNIQUE
 	,reviewer_id						BIGINT
@@ -164,7 +103,7 @@ DROP TABLE IF EXISTS _tb_dim_weather;
 GO
 
 CREATE TABLE _tb_dim_weather (
-	 id									BIGINT IDENTITY(1,1) PRIMARY KEY
+	 id									BIGINT IDENTITY(1,1)
 	,refresh_date						DATETIME DEFAULT GETDATE()
 	,dt									NVARCHAR(50)
 	,dt_iso								DATETIME

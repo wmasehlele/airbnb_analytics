@@ -22,7 +22,7 @@ def load_airbnb_listingsdata ():
     columns_listings = ['id','name','host_id','neighbourhood','neighbourhood_cleansed','latitude','longitude','property_type','room_type','accommodates','bathrooms','bedrooms','beds','price','minimum_nights','maximum_nights','minimum_minimum_nights','maximum_minimum_nights','minimum_maximum_nights','maximum_maximum_nights','minimum_nights_avg_ntm','maximum_nights_avg_ntm','number_of_reviews','number_of_reviews_ltm','number_of_reviews_l30d','first_review','last_review','review_scores_rating','review_scores_accuracy','review_scores_cleanliness','review_scores_checkin','review_scores_communication','review_scores_location','review_scores_value','instant_bookable','reviews_per_month']
     columns_hosts = ['host_id','host_name','host_since','host_location','host_response_time','host_response_rate','host_acceptance_rate','host_is_superhost','host_has_profile_pic','host_identity_verified']
     try:
-        data_load = pd.read_csv('listings.csv', encoding='utf8', dtype='object', low_memory=False)
+        data_load = pd.read_csv('data/listings.csv', encoding='utf8', dtype='object', low_memory=False)
 
         listings = pd.DataFrame(data_load[columns_listings])
         listings['first_review'] = pd.to_datetime(listings['first_review'])
@@ -71,7 +71,7 @@ def load_airbnb_reviewsdata ():
     db_conn = db_connection()
     columns_reviews = ['listing_id','id','date','reviewer_id','reviewer_name','comments']
     try:
-        data_load = pd.read_csv('reviews.csv', encoding='utf8', dtype='object', low_memory=False)
+        data_load = pd.read_csv('data/reviews.csv', encoding='utf8', dtype='object', low_memory=False)
         reviews = pd.DataFrame(data_load[columns_reviews])
 
         # clean the table before loading new data
@@ -90,7 +90,7 @@ def load_airbnb_calendardata ():
     db_conn = db_connection()
     columns_reviews = ['listing_id','date','available', 'price', 'minimum_nights', 'maximum_nights']
     try:
-        data_load = pd.read_csv('calendar.csv', encoding='utf8', dtype='object', low_memory=False)
+        data_load = pd.read_csv('data/calendar.csv', encoding='utf8', dtype='object', low_memory=False)
         calendar = pd.DataFrame(data_load[columns_reviews])
         calendar['available'] = calendar['available'].replace(['t','f'],[True,False])
         calendar['price'] = calendar['price'].replace({'\\$': '', ',': ''}, regex=True)
@@ -114,7 +114,7 @@ def load_capetown_historic_meteorologicaldata ():
     db_conn = db_connection()
     columns_weather = ['dt','dt_iso','timezone','city_name','temp','visibility','feels_like','temp_min','temp_max','pressure','humidity','wind_speed','wind_deg','clouds_all','weather_id','weather_main','weather_description']
     try:
-        data_load = pd.read_csv('cape_town.csv', encoding='utf8', dtype='object', low_memory=False)
+        data_load = pd.read_csv('data/cape_town.csv', encoding='utf8', dtype='object', low_memory=False)
         weather = pd.DataFrame(data_load[columns_weather])    
         weather['dt_iso'] = weather['dt_iso'].str[:-10]  
         weather['dt_iso'] = pd.to_datetime(weather['dt_iso'])
